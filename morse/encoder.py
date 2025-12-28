@@ -7,6 +7,7 @@ Functions:
 - encode_word(word): Encodes a single word into Morse code, separating letters with a space.
 """
 
+import string
 from morse.mapping import MORSE
 
 def encode(text):
@@ -14,15 +15,31 @@ def encode(text):
     Encodes the given text into Morse code.
     Words are separated by a pipe (|) and letters by a space.
     """
-    pass  # YOUR CODE HERE
+    text = text.upper()
+    
+    # remove punctuation
+    for p in string.punctuation:
+    
+        text = text.replace(p, "")
+    words = text.split(" ")
+    encoded_words = []
+
+    for word in words:
+        encoded_words.append(encode_word(word))
+
+    return "|".join(encoded_words)
 
 
 def encode_word(word):
+    word = word.upper()
     """
     Encodes a single word into Morse code.
     Letters are separated by a space.
     """
-    pass  # YOUR CODE HERE
+    letters = []
+    for char in word:
+        letters.append(MORSE[char])
+    return " ".join(letters)
 
 
 if __name__ == "__main__":
@@ -33,5 +50,5 @@ if __name__ == "__main__":
 
     # Example usage for a sentence
     EXAMPLE_TEXT = "abc ABC"
-    ENCODED_TEXT = encode(EXAMPLE_TEXT)
+    ENCODED_TEXT = encode("Hey Jude, don't make it bad")
     print(f"Encoded '{EXAMPLE_TEXT}' to Morse code: '{ENCODED_TEXT}'")
